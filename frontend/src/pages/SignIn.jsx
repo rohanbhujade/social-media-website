@@ -14,8 +14,10 @@ const SignIn = () => {
     const [userName, setUserName] = useState('')
     const [password, setPassword] = useState('')
     const [loading, setLoading] = useState(false)
+    const [error, seterror] = useState('')
     const navigate=useNavigate()
     const handleSignIn=async()=>{
+        seterror('')
         setLoading(true)
         try {
             const result =await axios.post(`${serverUrl}/api/auth/signin`,{userName,password},{withCredentials:true})
@@ -24,6 +26,7 @@ const SignIn = () => {
         } catch (error) {
             console.log(error);
             setLoading(false)
+            seterror(error.response?.data?.message)
         }
     }
   return (
@@ -44,7 +47,8 @@ const SignIn = () => {
                     {showPassword?<IoIosEyeOff onClick={()=>setshowPassword(false)} className='absolute cursor-pointer right-[20px] w-[25px] h-[25px]'/>:
 <IoIosEye onClick={()=>setshowPassword(true)} className='absolute cursor-pointer right-[20px] w-[25px] h-[25px]'/>}
                 </div>
-                <div className='w-[90%] px-[20px]'>Forgot Password ?</div>
+                <div className='w-[90%] px-[20px] cursor-pointer' onClick={()=>navigate('/forgot-password')}>Forgot Password ?</div>
+                {error && <p className='text-red-600'>{error}</p>}
                 <button onClick={handleSignIn} disabled={loading} className='w-[70%] px-[20px] py-[10px] bg-black text-white font-semibold h-[50px] cursor-pointer rounded-2xl mt-[30px]'>{loading?<ClipLoader size={30} color='white'/>:"Sign In"}</button>
                 <p className='text-gray-800 cursor-pointer'onClick={()=>navigate('/signup')}>Want To Create A New Account ? <span className='border-b-2 border-b-black pb-[3px] text-black'>Sign Up</span></p>
             </div>
