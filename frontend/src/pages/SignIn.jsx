@@ -5,6 +5,8 @@ import axios from 'axios'
 import logo from '../assets/logo.png'
 import { serverUrl } from '../App';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { setUserData } from '../redux/userSlice';
 const SignIn = () => {
     const [inputClicked, setInputClicked] = useState({
         userName:false,
@@ -16,12 +18,13 @@ const SignIn = () => {
     const [loading, setLoading] = useState(false)
     const [error, seterror] = useState('')
     const navigate=useNavigate()
+    const dispatch=useDispatch()
     const handleSignIn=async()=>{
         seterror('')
         setLoading(true)
         try {
             const result =await axios.post(`${serverUrl}/api/auth/signin`,{userName,password},{withCredentials:true})
-            console.log(result.data);
+            dispatch(setUserData(result.data));
             setLoading(false)    
         } catch (error) {
             console.log(error);
