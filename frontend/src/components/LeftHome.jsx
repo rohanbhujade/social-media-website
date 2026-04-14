@@ -36,7 +36,7 @@ const LeftHome = () => {
             <div className="text-[15px] text-gray-400 font-semibold">{userData.name}</div>
         </div>
         </div>
-        <div onClick={handleLogOut} className="text-blue-500 cursor-pointer font-semibold">Log Out</div>
+        <div onClick={handleLogOut} className="text-red-500 text-[18px] cursor-pointer font-semibold">Log Out</div>
       </div>
       <div className="w-full flex flex-col gap-[20px] p-[20px]">
         <h1 className="text-[white] text-[19px]">Suggested Users</h1>
