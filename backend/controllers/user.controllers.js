@@ -40,14 +40,16 @@ export const editProfile = async (req, res) => {
     }
     let profileImage;
     if (req.file) {
-      profileImage = uploadOnCloudinary(req.file.path);
+      profileImage =await uploadOnCloudinary(req.file.path);
     }
     user.name = name;
     user.userName = userName;
     user.profession = profession;
     user.bio = bio;
     user.gender = gender;
-    user.profileImage = profileImage;
+    if(profileImage){
+        user.profileImage = profileImage;
+    }
     await user.save();
     return res.status(200).json(user);
   } catch (error) {

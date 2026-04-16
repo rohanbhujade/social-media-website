@@ -150,7 +150,7 @@ const Profile = () => {
         </div>
       </div>
       <div className="w-full h-[80px] flex justify-center items-center gap-[20px] mt-[20px]">
-        {profileData?._id==userData?._id ?<button className="px-[10px] min-w-[150px] py-[5px] h-[40px] bg-white cursor-pointer rounded-2xl">Edit Profile
+        {profileData?._id==userData?._id ?<button className="px-[10px] min-w-[150px] py-[5px] h-[40px] bg-white cursor-pointer rounded-2xl" onClick={()=>navigate('/editprofile')}>Edit Profile
             </button>:<><button className="px-[10px] min-w-[150px] py-[5px] h-[40px] bg-white cursor-pointer rounded-2xl">Follow</button>
             <button className="px-[10px] min-w-[150px] py-[5px] h-[40px] bg-white cursor-pointer rounded-2xl">Message</button>
             </>}
