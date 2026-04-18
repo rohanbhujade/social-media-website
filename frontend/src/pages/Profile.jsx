@@ -46,7 +46,7 @@ const Profile = () => {
         <div className="font-semibold text-[20px]">{profileData?.userName}</div>
         <button
   onClick={handleLogOut}
-  className="relative px-5 py-2.5 text-[16px] font-semibold text-white rounded-xl bg-gradient-to-r from-red-500 to-pink-500 overflow-hidden transition-transform transition-shadow duration-300 duration-300 hover:scale-105 hover:shadow-[0_10px_30px_rgba(255,0,80,0.4)]"
+  className="relative cursor-pointer px-5 py-2.5 text-[16px] font-semibold text-white rounded-xl bg-gradient-to-r from-red-500 to-pink-500 overflow-hidden transition-transform transition-shadow duration-300 duration-300 hover:scale-105 hover:shadow-[0_10px_30px_rgba(255,0,80,0.4)]"
 >
   <span className="relative z-10">Log Out</span>
   <span className="absolute inset-0 bg-white opacity-0 hover:opacity-10 transition"></span>
