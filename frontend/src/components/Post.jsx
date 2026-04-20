@@ -9,6 +9,7 @@ import { IoSendSharp } from "react-icons/io5";
 import axios from 'axios';
 import { serverUrl } from '../App';
 import { setPostData } from '../redux/postSlice';
+import { setUserData } from '../redux/userSlice';
 
 const Post = ({post}) => {
     const {userData}=useSelector(state=>state.user)
@@ -26,6 +27,15 @@ const Post = ({post}) => {
             console.log(error)
         }
     }
+    const handleSaved=async()=>{
+        try {
+            const result=await axios.get(`${serverUrl}/api/post/saved/${post._id}`,{withCredentials:true})
+            dispatch(setUserData(result.data))
+        } catch (error) {
+            console.log(error)
+        }
+    }
+    
     const handleComment=async()=>{
         try {
             const result=await axios.post(`${serverUrl}/api/post/comment/${post._id}`,{message},{withCredentials:true})
@@ -36,6 +46,7 @@ const Post = ({post}) => {
             console.log(error)
         }
     }
+    
   return (
     <div className='w-[90%]  flex flex-col gap-[10px] bg-white items-center shadow-2xl shadow-[#00000058] rounded-2xl pb-[20px]'>
         <div className='flex justify-between w-full h-[80px] px-[10px] items-center'>
@@ -69,8 +80,8 @@ const Post = ({post}) => {
                     <span>{post.comments.length}</span>
                 </div>
             </div>
-            <div>{!userData.saved.includes(post._id) &&<MdOutlineBookmarkBorder className='w-[25px] h-[25px] cursor-pointer'/>}
-            {userData.saved.includes(post._id) && <GoBookmarkFill className='w-[25px] h-[25px] cursor-pointer text-fuchsia-600'/>}</div>
+            <div onClick={handleSaved}>{!userData?.saved?.includes(post._id) &&<MdOutlineBookmarkBorder className='w-[25px] h-[25px] cursor-pointer'/>}
+            {userData?.saved?.includes(post._id) && <GoBookmarkFill className='w-[25px] h-[25px] cursor-pointer '/>}</div>
         </div>
         {post.caption && <div className='flex justify-start items-center gap-[10px] w-full
          px-[20px] '>

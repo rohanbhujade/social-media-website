@@ -85,7 +85,6 @@ export const saved=async(req,res)=>{
             user.saved.push(postId)
         }
         await user.save()
-        await user.populate("saved")
         return res.status(200).json(user)
     } catch (error) {
          console.log(error)
