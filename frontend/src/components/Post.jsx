@@ -10,6 +10,7 @@ import axios from 'axios';
 import { serverUrl } from '../App';
 import { setPostData } from '../redux/postSlice';
 import { setUserData } from '../redux/userSlice';
+import FollowButton from './FollowButton';
 
 const Post = ({post}) => {
     const {userData}=useSelector(state=>state.user)
@@ -57,8 +58,7 @@ const Post = ({post}) => {
                     <div className='w-[150px] font-semibold truncate'>{post.author?.userName}
                     </div>
                     </div>
-                    <button className='px-[10px] md:w-[100px] w-[60px] py-[5px] h-[30px] md:h-[40px] bg-black text-white rounded-2xl text-[14px] md:text-[16px]'>Follow
-                    </button>
+                   {userData._id !=post.author._id && <FollowButton tailwind={'px-[10px] md:w-[100px] w-[60px] py-[5px] h-[30px] md:h-[40px] bg-black text-white cursor-pointer rounded-2xl text-[14px] md:text-[16px]'} targetUserID={post.author._id} />}
         </div>
               <div className="w-[90%] flex items-center justify-center ">
         {post.mediaType=="image" && <div className="w-[90%] flex items-center justify-center ">
@@ -81,7 +81,7 @@ const Post = ({post}) => {
                 </div>
             </div>
             <div onClick={handleSaved}>{!userData?.saved?.includes(post._id) &&<MdOutlineBookmarkBorder className='w-[25px] h-[25px] cursor-pointer'/>}
-            {userData?.saved?.includes(post._id) && <GoBookmarkFill className='w-[25px] h-[25px] cursor-pointer '/>}</div>
+            {userData?.saved?.includes(post._id) && <GoBookmarkFill className='w-[25px] h-[25px] cursor-pointer'/>}</div>
         </div>
         {post.caption && <div className='flex justify-start items-center gap-[10px] w-full
          px-[20px] '>
