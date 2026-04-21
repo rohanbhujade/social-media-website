@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { serverUrl } from "../App";
@@ -8,10 +8,13 @@ import { MdOutlineKeyboardBackspace } from "react-icons/md";
 import dp from "../assets/dp.webp";
 import Nav from "../components/Nav";
 import FollowButton from "../components/FollowButton";
+import Post from "../components/Post";
 const Profile = () => {
   const { userName } = useParams();
   const navigate=useNavigate()
+  const [postType, setpostType] = useState("posts")
   const { profileData,userData } = useSelector((state) => state.user);
+  const {postData}=useSelector(state=>state.post)
   const dispatch = useDispatch();
   const handleProfile = async () => {
     try {
@@ -87,7 +90,7 @@ const Profile = () => {
           <div className="flex items-center justify-center gap-[20px]">
             <div className="flex relative">
                   {profileData?.followers?.slice(0,3).map((user,index)=>(
- <div key={index} className={`w-[40px] h-[40px]  border-2 border-black rounded-full cursor-pointer overflow-hidden ${index>0? `absolute left-[${index*9}]`:""}`}>
+ <div key={index} className={`w-[40px] h-[40px]  border-2 border-black rounded-full cursor-pointer overflow-hidden ${index>0? `absolute left-[${index*12}px]`:""}`}>
                 <img
                   src={user?.profileImage || dp}
                   className="w-full object-cover"
@@ -108,7 +111,7 @@ const Profile = () => {
           <div className="flex items-center justify-center gap-[20px]">
             <div className="flex relative">
                       {profileData?.following?.slice(0,3).map((user,index)=>(
- <div key={index} className={`w-[40px] h-[40px]  border-2 border-black rounded-full cursor-pointer overflow-hidden ${index>0? `absolute left-[${index*9}]`:""}`}>
+ <div key={index} className={`w-[40px] h-[40px]  border-2 border-black rounded-full cursor-pointer overflow-hidden ${index>0? `absolute left-[${index*12}px]`:""}`}>
                 <img
                   src={user?.profileImage || dp}
                   className="w-full object-cover"
@@ -135,8 +138,22 @@ const Profile = () => {
             </>}
       </div>
       <div className="w-full min-h-[100vh] flex justify-center">
-        <div className="w-full max-w-[900px] flex flex-col items-center rounded-t-[30px] bg-white relative gap-[20px] pt-[30px]">
+        <div className="w-full max-w-[900px] flex flex-col items-center rounded-t-[30px] bg-white relative gap-[20px] pt-[30px] pb-[100px]">
+         {profileData?._id==userData._id && <div className="w-[90%] max-w-[500px] h-[80px] bg-white rounded-full flex justify-center items-center gap-[10px]">
+        <div onClick={()=>setpostType("posts")} className={`${postType=="posts"?"bg-black text-white shadow-2xl shadow-black":""} w-[28%] h-[80%] flex justify-center items-center text-[19px] font-semibold rounded-full hover:bg-black hover:text-white hover:shadow-black hover:shadow-2xl cursor-pointer `}>Posts</div>
+        <div onClick={()=>setpostType("saved")} className={`${postType=="saved"?"bg-black text-white shadow-2xl shadow-black":""} w-[28%] h-[80%] flex justify-center items-center text-[19px] font-semibold rounded-full hover:bg-black hover:text-white hover:shadow-black hover:shadow-2xl cursor-pointer `}>Saved</div>
+  
+      </div>} 
             <Nav/>
+            {postType=="posts" && postData.map((post,index)=>(
+  post?.author._id==profileData?._id && 
+  <Post post={post} key={index}/>
+)) }
+{postType == "saved" && postData?.map((post, index) => (
+    userData?.saved?.some(s => (s._id || s).toString() === post._id.toString()) 
+    && <Post post={post} key={index} />
+))}
+
         </div>
       </div>
     </div>

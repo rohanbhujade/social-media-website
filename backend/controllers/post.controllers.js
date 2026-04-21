@@ -78,7 +78,7 @@ export const saved=async(req,res)=>{
     try {
         const postId=req.params.postId
         const user=await User.findById(req.userId)
-        const alreadySaved=user.saved.some(id=>id.toString()==postId.toString())
+        const alreadySaved=user.saved.some(id=>id.toString()===postId.toString())
         if(alreadySaved){
             user.saved=user.saved.filter(id=>id.toString()!==postId.toString())
         }else{

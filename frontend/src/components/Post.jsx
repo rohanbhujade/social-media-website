@@ -80,8 +80,10 @@ const Post = ({post}) => {
                     <span>{post.comments.length}</span>
                 </div>
             </div>
-            <div onClick={handleSaved}>{!userData?.saved?.includes(post._id) &&<MdOutlineBookmarkBorder className='w-[25px] h-[25px] cursor-pointer'/>}
-            {userData?.saved?.includes(post._id) && <GoBookmarkFill className='w-[25px] h-[25px] cursor-pointer'/>}</div>
+            <div onClick={handleSaved}>{!userData?.saved?.some(s => (s._id || s).toString() === post._id.toString())
+    ? <MdOutlineBookmarkBorder className='w-[25px] h-[25px] cursor-pointer'/>
+    : <GoBookmarkFill className='w-[25px] h-[25px] cursor-pointer'/>
+}</div>
         </div>
         {post.caption && <div className='flex justify-start items-center gap-[10px] w-full
          px-[20px] '>

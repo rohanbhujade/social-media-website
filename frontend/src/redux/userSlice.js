@@ -6,7 +6,7 @@ const userSlice=createSlice({
         userData:null,
         suggestedUsers:null,
         profileData:null,
-        following:[]
+        following:[],
     },
     reducers:{
         setUserData:(state,action)=>{
@@ -28,7 +28,8 @@ const userSlice=createSlice({
             }else{
                 state.following.push(targetUserId)
             }
-        }
+        },
+        
     }
 })
 export const {setUserData,setSuggestedUsers,setProfileData,toggleFollow,setFollowing}=userSlice.actions
