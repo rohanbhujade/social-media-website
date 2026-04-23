@@ -104,7 +104,7 @@ const Upload = () => {
         <div onClick={()=>setUploadType("loop")} className={`${uploadType=="loop"?"bg-black text-white shadow-2xl shadow-black":""} w-[28%] h-[80%] flex justify-center items-center text-[19px] font-semibold rounded-full hover:bg-black hover:text-white hover:shadow-black hover:shadow-2xl cursor-pointer `}>Loop</div>
       </div>
       {!frontendMedia && <div className="w-[80%] max-w-[500px] h-[250px] bg-[#0e1316] bg-gray-800 border-2 flex flex-col items-center justify-center gap-[8px] mt-[15vh] rounded-2xl cursor-pointer hover:bg-[#353a3d]" onClick={()=>mediaInput.current.click()} >
-        <input type="file" hidden ref={mediaInput} onChange={handleMedia} />
+        <input type="file" hidden ref={mediaInput} onChange={handleMedia} accept={uploadType==="loop"?"video/*":""} />
         <FiPlusSquare className='text-white w-[25px] h-[25px] cursor-pointer'  />
         <div className="text-white text-[19px] font-semibold">Upload {uploadType}</div>
         </div> }

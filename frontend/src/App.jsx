@@ -12,11 +12,14 @@ import Profile from './pages/Profile'
 import EditProfile from './pages/EditProfile'
 import Upload from './pages/Upload'
 import getAllPost from './hooks/getAllPost'
+import Loops from './pages/Loops'
+import getAllLoops from './hooks/getAllLoops'
 export const serverUrl="http://localhost:7000"
 const App = () => {
     getCurrentUser()
     getSuggestedUsers()
     getAllPost()
+    getAllLoops()
   const {userData}=useSelector(state=>state.user)
   return (
   <Routes>
@@ -27,6 +30,8 @@ const App = () => {
     <Route path='/profile/:userName' element={userData?<Profile/>:<Navigate to ={'/signin'}/>}/>
     <Route path='/editprofile' element={userData?<EditProfile/>:<Navigate to ={'/signin'}/>}/>
     <Route path='/upload' element={userData?<Upload/>:<Navigate to ={'/signin'}/>}/>
+    <Route path='/loops' element={userData?<Loops/>:<Navigate to ={'/signin'}/>}/>
+
 
   </Routes>
   )
