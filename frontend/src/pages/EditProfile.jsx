@@ -61,7 +61,7 @@ const EditProfile = () => {
                   <input type="file" accept='image/*' ref={imageInput} hidden onChange={handleImage}/>
                           <img
                             src={frontendImage}
-                            className="w-full object-cover"
+                            className="w-full object-cover h-full"
                             alt=""
                           />
                         </div>

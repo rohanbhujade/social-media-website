@@ -22,6 +22,7 @@ export const uploadStory=async(req,res)=>{
         await user.save()
         const populatedStory=await Story.findById(story._id).populate("author","name userName profileImage")
         .populate("viewers","name userName profileImage")
+        
         return res.status(200).json(populatedStory)
     } catch (error) {
         console.log(error)
@@ -63,5 +64,19 @@ export const getStoryByUserName=async(req,res)=>{
     } catch (error) {
         console.log(error)
         return res.status(500).json({message:"get story by username error"})
+    }
+}
+export const getAllStories=async(req,res)=>{
+    try {
+        const currentUser=await User.findById(req.userId)
+        const followingids=currentUser.following
+        const stories=await Story.find({
+            author:{$in:followingids}
+        }).populate("viewers author").sort({createdAt:-1})
+        return res.status(200).json(stories)
+    } catch (error) {
+        console.log(error)
+        return res.status(500).json({message:"all story get error"})
+        
     }
 }

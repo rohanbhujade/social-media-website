@@ -16,7 +16,7 @@ const Nav = () => {
         <div onClick={()=>navigate('/upload')}><FiPlusSquare className='text-white w-[25px] h-[25px] cursor-pointer'  /></div>
         <div onClick={()=>navigate('loops')}><RxVideo className='text-white w-[28px] h-[28px] cursor-pointer'  /></div>
           <div className="w-[40px] h-[40px] border-2 border-black rounded-full cursor-pointer overflow-hidden" onClick={()=>navigate(`/profile/${userData.userName}`)}>
-                    <img src={userData.profileImage||dp} className="w-full object-cover" alt="" />
+                    <img src={userData.profileImage||dp} className="w-full object-cover h-full" alt="" />
                 </div>
     </div>
   )

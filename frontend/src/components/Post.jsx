@@ -53,7 +53,7 @@ const Post = ({post}) => {
         <div className='flex justify-between w-full h-[80px] px-[10px] items-center'>
             <div className='flex justify-center items-center gap-[10px] md:gap-[20px]'>
              <div className="w-[40px] h-[40px] md:h-[60px] md:w-[60px] border-2 border-black rounded-full cursor-pointer overflow-hidden">
-                        <img src={post.author?.profileImage || dp} className="w-full object-cover" alt="" />
+                        <img src={post.author?.profileImage || dp} className="w-full h-full object-cover" alt="" />
                     </div>
                     <div className='w-[150px] font-semibold truncate'>{post.author?.userName}
                     </div>

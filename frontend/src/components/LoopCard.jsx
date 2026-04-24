@@ -174,7 +174,7 @@ const LoopCard = ({loop}) => {
         <div className='w-full h-[100px] absolute bottom-[10px] p-[10px] flex flex-col gap-[10px] '>
           <div className='flex items-center gap-[5px] '>
                        <div className="w-[30px] h-[30px] md:h-[40px] md:w-[40px] border-2 border-black rounded-full cursor-pointer overflow-hidden">
-                                  <img src={loop?.author?.profileImage || dp} className="w-full object-cover" alt="" />
+                                  <img src={loop?.author?.profileImage || dp} className="w-full object-cover h-full" alt="" />
                               </div>
                               <div className='max-w-[120px] font-semibold truncate text-white'>{loop?.author?.userName}
                               </div>

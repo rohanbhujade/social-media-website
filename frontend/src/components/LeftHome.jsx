@@ -29,7 +29,7 @@ const LeftHome = () => {
       <div className="flex items-center justify-between p-[10px] w-full gap-[10px] border-b-2 border-b-gray-800 py-[10px]">
         <div className="flex items-center gap-[10px]">
         <div className="w-[70px] h-[70px] border-2 border-black rounded-full cursor-pointer overflow-hidden">
-            <img src={userData.profileImage || dp} className="w-full object-cover" alt="" />
+            <img src={userData.profileImage || dp} className="w-full object-cover h-full" alt="" />
         </div>
         <div>
             <div className="text-[18px] text-white font-semibold">{userData.userName}</div>
