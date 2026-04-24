@@ -10,7 +10,7 @@ import axios from 'axios';
 import { setLoopData } from '../redux/loopSlice';
 import { serverUrl } from '../App';
 import { IoSendSharp } from 'react-icons/io5';
-const LoopCard = ({loop}) => {
+const LoopCard = ({loop,key1}) => {
   const [isPlaying, setisPlaying] = useState(true)
   const [ismute, setismute] = useState(false)
   const [progress, setprogress] = useState(0)
@@ -68,26 +68,29 @@ const LoopCard = ({loop}) => {
       {!loop?.likes?.includes(userData._id)?handleLike():null}
     }
     useEffect(() => {
-      const observer=new IntersectionObserver(([entry])=>{
-        const video=videoref.current
-        if(entry.isIntersecting){
-          video.play()
-          setisPlaying(true)
-        }
-        else{
-          video.pause()
-          setisPlaying(false)
-        }
-      },{threshold:0.6})
-      if(videoref.current){
-        observer.observe(videoref.current)
-      }
-      return()=>{
-        if(videoref.current){
-          observer.unobserve(videoref.current)
-        }
-      }
-    }, [])
+  const observer = new IntersectionObserver(([entry]) => {
+    const video = videoref.current;
+    if (!video) return; // ← guard here
+
+    if (entry.isIntersecting) {
+      video.play();
+      setisPlaying(true);
+    } else {
+      video.pause();
+      setisPlaying(false);
+    }
+  }, { threshold: 0.6 });
+
+  if (videoref.current) {
+    observer.observe(videoref.current);
+  }
+
+  return () => {
+    if (videoref.current) {
+      observer.unobserve(videoref.current);
+    }
+  };
+}, []);
     useEffect(() => {
      const handleClickOutside=(event)=>{
       if(commentRef.current && !commentRef.current.contains(event.target)){

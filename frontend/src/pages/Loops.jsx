@@ -18,8 +18,8 @@ const Loops = () => {
       </div>
       <div className="h-[100vh] overflow-y-scroll snap-y snap-mandatory scrollbar-hide">
 {loopData.map((loop,index)=>(
-    <div className="h-screen snap-start">
-    <LoopCard loop={loop} key={index}/>
+    <div key={index} className="h-screen snap-start">
+    <LoopCard loop={loop} key1={index}/>
     </div>
 ))}
       </div>
