@@ -6,7 +6,7 @@ import User from "../models/user.model.js";
 export const getAllLoops=async(req,res)=>{
     try {
         const loop=await Loop.find({}).populate("author","name userName profileImage")
-        .populate("comments.author")
+        .populate("comments.author").sort({createdAt:-1})
         return res.status(200).json(loop)
     } catch (error) {
         console.log(error)

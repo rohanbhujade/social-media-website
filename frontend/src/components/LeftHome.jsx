@@ -6,6 +6,8 @@ import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { serverUrl } from "../App";
 import { setUserData } from "../redux/userSlice";
+import { LogOut } from "lucide-react"
+
 import OtherUser from "./OtherUser";
 const LeftHome = () => {
     const {userData,suggestedUsers}=useSelector(state=>state.user)
@@ -36,7 +38,23 @@ const LeftHome = () => {
             <div className="text-[15px] text-gray-400 font-semibold">{userData.name}</div>
         </div>
         </div>
-        <div onClick={handleLogOut} className="text-red-500 text-[18px] cursor-pointer font-semibold">Log Out</div>
+      <button
+  onClick={handleLogOut}
+  className="group relative flex items-center gap-2 px-4 py-2 rounded-xl text-[13px] font-semibold text-red-400/80 border border-red-500/10 bg-red-950/20 hover:bg-red-950/40 hover:border-red-400/25 hover:text-red-300 overflow-hidden transition-all duration-300 cursor-pointer"
+>
+  {/* shimmer sweep */}
+  <span className="absolute inset-0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 bg-gradient-to-r from-transparent via-red-400/10 to-transparent skew-x-12 pointer-events-none" />
+  
+  {/* dot pulse */}
+  <span className="relative flex h-1.5 w-1.5">
+    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-50" />
+    <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-red-500/70" />
+  </span>
+
+  Log out
+
+  <LogOut className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:opacity-100 opacity-60 transition-all duration-300" />
+</button>
       </div>
       <div className="w-full flex flex-col gap-[20px] p-[20px]">
         <h1 className="text-[white] text-[19px]">Suggested Users</h1>

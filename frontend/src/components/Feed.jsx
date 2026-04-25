@@ -5,17 +5,22 @@ import StoryDp from './StoryDp'
 import Nav from './Nav'
 import { useSelector } from 'react-redux'
 import Post from './Post'
+import { Send } from 'lucide-react'
+import { useNavigate } from 'react-router-dom'
 const Feed = () => {
   const {postData}=useSelector(state=>state.post)
     const {userData}=useSelector(state=>state.user)
     const {storyList,currentUserStory}=useSelector(state=>state.story)
-
+const navigate=useNavigate()
   return (
     <div className='lg:w-[50%] w-full bg-black min-h-[100vh] lg:h-[100vh] relative lg:overflow-y-auto'>
-        <div className="w-full h-[100px] flex items-center justify-between p-[20px] lg:hidden">
+        <div className="w-full h-[100px] flex items-center justify-between p-[10px] lg:hidden">
                 <img src={logo} alt="" className="w-[110px]" />
-                <div>
+                <div className='flex items-center gap-[10px]'>
                   <FaRegHeart className="text-white w-[25px] h-[25px]" />
+                      <Send className="text-white w-[22px] h-[22px] cursor-pointer transition-transform duration-200 active:scale-90"  
+                      onClick={() => navigate('/messages')} />
+
                 </div>
               </div>
               <div className='flex w-full overflow-auto gap-[10px] items-center p-[20px]'>

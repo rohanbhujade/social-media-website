@@ -8,7 +8,9 @@ import { MdOutlineKeyboardBackspace } from "react-icons/md";
 import dp from "../assets/dp.webp";
 import Nav from "../components/Nav";
 import FollowButton from "../components/FollowButton";
+import { LogOut } from "lucide-react";
 import Post from "../components/Post";
+import { setSelectedUser } from "../redux/messageSlice";
 const Profile = () => {
   const { userName } = useParams();
   const navigate=useNavigate()
@@ -50,10 +52,43 @@ const Profile = () => {
         <div className="font-semibold text-[20px]">{profileData?.userName}</div>
         <button
   onClick={handleLogOut}
-  className="relative cursor-pointer px-5 py-2.5 text-[16px] font-semibold text-white rounded-xl bg-gradient-to-r from-red-500 to-pink-500 overflow-hidden transition-transform transition-shadow duration-300 duration-300 hover:scale-105 hover:shadow-[0_10px_30px_rgba(255,0,80,0.4)]"
+  className="group relative cursor-pointer px-6 py-2.5 text-[13px] font-bold rounded-xl overflow-hidden active:scale-95 transition-transform duration-150"
+  style={{
+    background: "linear-gradient(160deg, #ff6b6b 0%, #ef4444 30%, #dc2626 60%, #991b1b 100%)",
+    boxShadow: "0 0 0 1px rgba(255,100,80,0.3), 0 4px 20px rgba(239,68,68,0.4), 0 8px 40px rgba(180,20,20,0.3), inset 0 1px 0 rgba(255,255,255,0.2), inset 0 -1px 0 rgba(0,0,0,0.2)",
+  }}
+  onMouseEnter={e => e.currentTarget.style.boxShadow = "0 0 0 1px rgba(255,120,80,0.5), 0 0 20px rgba(255,80,80,0.4), 0 8px 40px rgba(239,68,68,0.5), 0 16px 60px rgba(180,20,20,0.35), inset 0 1px 0 rgba(255,255,255,0.25), inset 0 -1px 0 rgba(0,0,0,0.2)"}
+  onMouseLeave={e => e.currentTarget.style.boxShadow = "0 0 0 1px rgba(255,100,80,0.3), 0 4px 20px rgba(239,68,68,0.4), 0 8px 40px rgba(180,20,20,0.3), inset 0 1px 0 rgba(255,255,255,0.2), inset 0 -1px 0 rgba(0,0,0,0.2)"}
 >
-  <span className="relative z-10">Log Out</span>
-  <span className="absolute inset-0 bg-white opacity-0 hover:opacity-10 transition"></span>
+  {/* animated gradient border */}
+  <span className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
+    style={{ background: "linear-gradient(160deg, rgba(255,150,100,0.15) 0%, transparent 60%)" }}
+  />
+
+  {/* top glass gloss */}
+  <span className="absolute top-0 left-0 right-0 h-[50%] rounded-t-xl pointer-events-none"
+    style={{ background: "linear-gradient(180deg, rgba(255,255,255,0.18) 0%, transparent 100%)" }}
+  />
+
+  {/* shimmer sweep */}
+  <span className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-600 pointer-events-none skew-x-12"
+    style={{ background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.22), transparent)" }}
+  />
+
+  {/* bottom shadow depth */}
+  <span className="absolute bottom-0 left-0 right-0 h-[35%] rounded-b-xl pointer-events-none"
+    style={{ background: "linear-gradient(0deg, rgba(0,0,0,0.3) 0%, transparent 100%)" }}
+  />
+
+  {/* pulsing ring */}
+  <span className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 pointer-events-none animate-ping"
+    style={{ boxShadow: "0 0 0 4px rgba(239,68,68,0.15)", animationDuration: "1.5s" }}
+  />
+
+  <span className="relative z-10 flex items-center gap-2 text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.4)]">
+    <LogOut className="w-3.5 h-3.5 drop-shadow-sm group-hover:rotate-[-12deg] group-hover:-translate-x-0.5 transition-all duration-300" />
+    <span className="tracking-wide">Log Out</span>
+  </span>
 </button>
       </div>
       <div className="w-full h-[150px] flex items-start gap-[20px] lg:gap-[50px] pt-[20px] px-[10px] justify-center">
@@ -96,7 +131,7 @@ const Profile = () => {
         width: `${40 + (Math.min(profileData?.followers?.length ?? 0, 3) - 1) * 12}px`,
       }}
     >
-      {profileData?.followers?.slice(0, 3).map((user, index) => (
+      {profileData?.followers?.slice(-3).map((user, index) => (
         <div
           key={index}
           className="w-[40px] h-[40px] border-2 border-black rounded-full cursor-pointer overflow-hidden absolute"
@@ -131,7 +166,7 @@ const Profile = () => {
         width: `${40 + (Math.min(profileData?.following?.length, 3) - 1) * 9}px`,
       }}
     >
-      {profileData?.following?.slice(0, 3).map((user, index) => (
+      {profileData?.following?.slice(-3).map((user, index) => (
         <div
           key={index}
           className="w-[40px] h-[40px] border-2 border-black rounded-full cursor-pointer overflow-hidden absolute"
@@ -161,7 +196,8 @@ const Profile = () => {
         {profileData?._id==userData?._id ?<button className="px-[10px] min-w-[150px] py-[5px] h-[40px] bg-white cursor-pointer rounded-2xl" onClick={()=>navigate('/editprofile')}>Edit Profile
             </button>:<>
             <FollowButton tailwind={"px-[10px] min-w-[150px] py-[5px] h-[40px] bg-white cursor-pointer rounded-2xl"} targetUserID={profileData?._id} onFollowChange={handleProfile}/>
-            <button className="px-[10px] min-w-[150px] py-[5px] h-[40px] bg-white cursor-pointer rounded-2xl">Message</button>
+            <button className="px-[10px] min-w-[150px] py-[5px] h-[40px] bg-white cursor-pointer rounded-2xl" onClick={()=>{dispatch(setSelectedUser(profileData))
+              navigate('/messageArea')}}>Message</button>
             </>}
       </div>
       <div className="w-full min-h-[100vh] flex justify-center">

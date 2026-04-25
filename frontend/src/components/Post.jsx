@@ -11,12 +11,14 @@ import { serverUrl } from '../App';
 import { setPostData } from '../redux/postSlice';
 import { setUserData } from '../redux/userSlice';
 import FollowButton from './FollowButton';
+import { useNavigate } from 'react-router-dom';
 
 const Post = ({post}) => {
     const {userData}=useSelector(state=>state.user)
     const {postData}=useSelector(state=>state.post)
     const dispatch=useDispatch()
     const [showComment, setShowComment] = useState(false)
+    const navigate=useNavigate()
     const [message, setmessage] = useState('')
     const handleLike=async()=>{
         try {
@@ -51,14 +53,14 @@ const Post = ({post}) => {
   return (
     <div className='w-[90%]  flex flex-col gap-[10px] bg-white items-center shadow-2xl shadow-[#00000058] rounded-2xl pb-[20px]'>
         <div className='flex justify-between w-full h-[80px] px-[10px] items-center'>
-            <div className='flex justify-center items-center gap-[10px] md:gap-[20px]'>
+            <div className='flex justify-center items-center gap-[10px] md:gap-[20px]' onClick={()=>navigate(`/profile/${post?.author?.userName}`)}>
              <div className="w-[40px] h-[40px] md:h-[60px] md:w-[60px] border-2 border-black rounded-full cursor-pointer overflow-hidden">
                         <img src={post.author?.profileImage || dp} className="w-full h-full object-cover" alt="" />
                     </div>
                     <div className='w-[150px] font-semibold truncate'>{post.author?.userName}
                     </div>
                     </div>
-                   {userData._id !=post.author._id && <FollowButton tailwind={'px-[10px] md:w-[100px] w-[60px] py-[5px] h-[30px] md:h-[40px] bg-black text-white cursor-pointer rounded-2xl text-[14px] md:text-[16px]'} targetUserID={post.author._id} />}
+                   {userData._id !=post.author._id && <FollowButton tailwind={'px-[10px] md:min-w-[100px] min-w-[60px] py-[5px] h-[30px] md:h-[40px] bg-black text-white cursor-pointer rounded-2xl text-[14px] md:text-[16px]'} targetUserID={post.author._id} />}
         </div>
               <div className="w-[90%] flex items-center justify-center ">
         {post.mediaType=="image" && <div className="w-[90%] flex items-center justify-center ">
