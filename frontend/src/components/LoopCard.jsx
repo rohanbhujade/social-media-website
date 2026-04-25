@@ -15,6 +15,8 @@ const LoopCard = ({loop,key1}) => {
   const [ismute, setismute] = useState(false)
   const [progress, setprogress] = useState(0)
   const {userData}=useSelector(state=>state.user)
+  const {socket}=useSelector(state=>state.socket)
+
   const {loopData}=useSelector(state=>state.loop)
   const [showHeart, setshowHeart] = useState(false)
   const dispatch=useDispatch()
@@ -67,6 +69,30 @@ const LoopCard = ({loop,key1}) => {
       }, 2000);
       {!loop?.likes?.includes(userData._id)?handleLike():null}
     }
+     useEffect(() => {
+      socket?.on("likedLoop", (updatedData) => {
+        const updatedLoops = loopData.map(p =>
+          p._id === updatedData.loopId
+            ? { ...p, likes: updatedData.likes }
+            : p
+        )
+        dispatch(setLoopData(updatedLoops))
+      })
+    
+      socket?.on("commentedLoop", (updatedData) => {
+        const updatedLoops = loopData.map(p =>
+          p._id === updatedData.loopId
+            ? { ...p, comments: updatedData.comments }
+            : p
+        )
+        dispatch(setLoopData(updatedLoops))
+      })
+    
+      return () => {
+        socket?.off("likedLoop")
+        socket?.off("commentedLoop")
+      }
+    }, [socket, loopData, dispatch])
     useEffect(() => {
   const observer = new IntersectionObserver(([entry]) => {
     const video = videoref.current;
