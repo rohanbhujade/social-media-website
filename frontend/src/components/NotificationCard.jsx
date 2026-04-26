@@ -67,11 +67,11 @@ const NotificationCard = ({ noti }) => {
           background: 'rgba(255,255,255,0.04)',
         }}>
           {noti.loop ? (
-            <video src={noti.loop?.media} muted style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+            <video src={noti.loop?.media} muted preload='none' style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
           ) : noti.post?.mediaType === 'image' ? (
             <img src={noti.post?.media} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
           ) : noti.post ? (
-            <video src={noti.post?.media} muted loop style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+            <video src={noti.post?.media} muted preload='none' loop style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
           ) : null}
         </div>
       )}
