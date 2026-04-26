@@ -23,6 +23,7 @@ import {io} from 'socket.io-client'
 import { useEffect } from 'react'
 import getFollowingList from './hooks/getFollowingList'
 import getPrevChatUsers from './hooks/getPrevChatUsers'
+import Search from './pages/Search'
 export const serverUrl="http://localhost:7000"
 const App = () => {
     getCurrentUser()
@@ -66,7 +67,7 @@ const App = () => {
     <Route path='/editprofile' element={userData?<EditProfile/>:<Navigate to ={'/signin'}/>}/>
     <Route path='/messages' element={userData?<Messages/>:<Navigate to ={'/signin'}/>}/>
     <Route path='/messageArea' element={userData?<MessageArea/>:<Navigate to ={'/signin'}/>}/>
-
+    <Route path='/search' element={userData?<Search/>:<Navigate to ={'/signin'}/>}/>
     <Route path='/upload' element={userData?<Upload/>:<Navigate to ={'/signin'}/>}/>
     <Route path='/loops' element={userData?<Loops/>:<Navigate to ={'/signin'}/>}/>
     <Route path='/story/:userName' element={userData?<Story/>:<Navigate to ={'/signin'}/>}/>

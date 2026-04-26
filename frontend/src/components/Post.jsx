@@ -13,6 +13,7 @@ import { setUserData } from '../redux/userSlice';
 import FollowButton from './FollowButton';
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
+import { FaRegComment } from 'react-icons/fa6';
 
 const Post = ({post}) => {
     const {userData}=useSelector(state=>state.user)
@@ -47,6 +48,7 @@ const Post = ({post}) => {
             const updatedPost=result.data
             const updatedPosts=postData.map(p=>p._id==post._id?updatedPost:p)
             dispatch(setPostData(updatedPosts))
+            setmessage('')
         } catch (error) {
             console.log(error)
         }
@@ -98,13 +100,13 @@ const Post = ({post}) => {
         </div>
         <div className='flex w-full h-[60px] justify-between items-center px-[20px] mt-[10px]'>
             <div className='flex justify-center items-center gap-[10px]'>
-                <div className='flex justify-center items-center gap-[5px]' onClick={handleLike}>
-                    {!post.likes.includes(userData._id) && <GoHeart className='w-[25px] h-[25px] cursor-pointer'/>}
-                    {post.likes.includes(userData._id) && <GoHeartFill className='w-[25px] h-[25px] cursor-pointer text-red-600'/>}
+                <div className='flex justify-center items-center gap-[5px] cursor-pointer' onClick={handleLike}>
+                    {!post.likes.includes(userData._id) && <GoHeart className='w-[25px] h-[25px] font-bold '/>}
+                    {post.likes.includes(userData._id) && <GoHeartFill className='w-[25px] h-[25px] cursor-pointer text-red-600 '/>}
                     <span>{post.likes.length}</span>
                 </div>
                 <div className='flex justify-center items-center gap-[5px]' onClick={()=>setShowComment(prev=>!prev)}>
-                    <MdOutlineComment className='w-[25px] cursor-pointer h-[25px]'/>
+                    <FaRegComment className='w-[25px] cursor-pointer h-[25px]'/>
                     <span>{post.comments.length}</span>
                 </div>
             </div>
@@ -121,17 +123,17 @@ const Post = ({post}) => {
         {showComment && <div className='w-full flex flex-col gap-[30px] pb-[20px]'>
             <div className='flex justify-between items-center h-[80px] w-full px-[20px] relative'>
             <div className="w-[40px] h-[40px] md:h-[60px] md:w-[60px] border-2 border-black rounded-full cursor-pointer overflow-hidden">
-                        <img src={userData?.profileImage || dp} className="w-full object-cover" alt="" />
+                        <img src={userData?.profileImage || dp} className="w-full object-cover h-full" alt="" />
                     </div>
                     <input type="text" className='px-[10px] border-b-2 border-b-gray-500 w-[90%] outline-none h-[40px]' placeholder='Add a comment...' 
                     onChange={(e)=>setmessage(e.target.value)} value={message} />
-                    <button className='absolute right-[20px] cursor-pointer' onClick={handleComment}><IoSendSharp className='w-[25px] h-[25px]' /></button>
+                    {message && <button className='absolute right-[20px] cursor-pointer' onClick={handleComment}><IoSendSharp className='w-[25px] h-[25px]' /></button>}
                     </div>
                     <div className='w-full max-w-[300px] overflow-auto'>
                         {post.comments.map((com,index)=>(
                             <div key={index} className='w-full px-[20px] py-[20px] flex items-center gap-[20px] border-b-2 border-b-gray-200'>
                                 <div className="w-[40px] h-[40px] md:h-[60px] md:w-[60px] border-2 border-black rounded-full cursor-pointer overflow-hidden">
-                        <img src={com.author?.profileImage || dp} className="w-full object-cover" alt="" />
+                        <img src={com.author?.profileImage || dp} className="w-full object-cover h-full" alt="" />
                                </div>
                                <div className='flex flex-col gap-[5px]'>
                                 <div className='w-[150px] font-semibold truncate'>{com.author?.userName} </div>

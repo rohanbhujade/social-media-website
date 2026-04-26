@@ -5,8 +5,8 @@ import StoryDp from './StoryDp'
 import Nav from './Nav'
 import { useSelector } from 'react-redux'
 import Post from './Post'
-import { Send } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
+import { MdOutlineMessage } from 'react-icons/md'
 const Feed = () => {
   const {postData}=useSelector(state=>state.post)
     const {userData}=useSelector(state=>state.user)
@@ -18,7 +18,7 @@ const navigate=useNavigate()
                 <img src={logo} alt="" className="w-[110px]" />
                 <div className='flex items-center gap-[10px]'>
                   <FaRegHeart className="text-white w-[25px] h-[25px]" />
-                      <Send className="text-white w-[22px] h-[22px] cursor-pointer transition-transform duration-200 active:scale-90"  
+                      <MdOutlineMessage className="text-white w-[22px] h-[22px] cursor-pointer transition-transform duration-200 active:scale-90"  
                       onClick={() => navigate('/messages')} />
 
                 </div>
