@@ -1,8 +1,9 @@
 import uploadOnCloudinary from "../config/cloudinary.js";
 import Loop from "../models/loop.model.js";
+import Notification from "../models/notification.model.js";
 
 import User from "../models/user.model.js";
-import { io } from "../socket.js";
+import { getSocketId, io } from "../socket.js";
 
 export const getAllLoops=async(req,res)=>{
     try {
@@ -49,6 +50,20 @@ export const like=async(req,res)=>{
             loop.likes=loop.likes.filter(id=>id.toString()!==req.userId.toString())
         }else{
             loop.likes.push(req.userId)
+             if(loop.author._id !==req.userId){
+                            const notification=await Notification.create({
+                                sender:req.userId,
+                                receiver:loop.author._id,
+                                type:"like",
+                                loop:loop._id,
+                                message:"liked your loop"
+                            })
+                            const populatedNotification=await Notification.findById(notification._id).populate("sender receiver loop")
+                            const receiverSocketId=getSocketId(loop.author._id)
+                            if(receiverSocketId){
+                                io.to(receiverSocketId).emit("newNotification",populatedNotification)
+                            }
+                        }
         }
         await loop.save()
         await loop.populate("author","name userName profileImage")
@@ -71,6 +86,20 @@ export const comment=async(req,res)=>{
             return res.status(400).json({message:"loop not found"})
         }
         loop.comments.push({author:req.userId,message})
+        if(loop.author._id !==req.userId){
+                            const notification=await Notification.create({
+                                sender:req.userId,
+                                receiver:loop.author._id,
+                                type:"comment",
+                                loop:loop._id,
+                                message:"commented on your loop"
+                            })
+                            const populatedNotification=await Notification.findById(notification._id).populate("sender receiver loop")
+                            const receiverSocketId=getSocketId(loop.author._id)
+                            if(receiverSocketId){
+                                io.to(receiverSocketId).emit("newNotification",populatedNotification)
+                            }
+                        }
         await loop.save()
         await loop.populate("author","name userName profileImage")
         await loop.populate("comments.author")

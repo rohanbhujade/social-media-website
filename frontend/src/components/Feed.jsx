@@ -10,6 +10,7 @@ import { MdOutlineMessage } from 'react-icons/md'
 const Feed = () => {
   const {postData}=useSelector(state=>state.post)
     const {userData}=useSelector(state=>state.user)
+    const {notificationData}=useSelector(state=>state.user)
     const {storyList,currentUserStory}=useSelector(state=>state.story)
 const navigate=useNavigate()
   return (
@@ -17,7 +18,10 @@ const navigate=useNavigate()
         <div className="w-full h-[100px] flex items-center justify-between p-[10px] lg:hidden">
                 <img src={logo} alt="" className="w-[110px]" />
                 <div className='flex items-center gap-[10px]'>
-                  <FaRegHeart className="text-white w-[25px] h-[25px]" />
+<div className="relative cursor-pointer" onClick={()=>navigate('/notifications')}>
+          <FaRegHeart className="text-white w-[25px] h-[25px]" />
+          {notificationData?.length > 0 && notificationData.some((noti) => noti.isRead === false) && (<div className='w-[10px] h-[10px] bg-red-600 rounded-full absolute top-0 right-[-5px]'></div>)}
+        </div>                  
                       <MdOutlineMessage className="text-white w-[22px] h-[22px] cursor-pointer transition-transform duration-200 active:scale-90"  
                       onClick={() => navigate('/messages')} />
 

@@ -1,5 +1,7 @@
 import uploadOnCloudinary from "../config/cloudinary.js";
+import Notification from "../models/notification.model.js";
 import User from "../models/user.model.js";
+import { getSocketId, io } from "../socket.js";
 
 export const getCurrentUser = async (req, res) => {
   try {
@@ -96,7 +98,17 @@ export const follow=async(req,res)=>{
     }else{
       currentUser.following.push(targetUserId)
       targetUser.followers.push(currentUserId)
-       await currentUser.save()
+      if(currentUser._id !==targetUser._id){
+              const notification=await Notification.create({
+                      sender:currentUser._id,
+                      receiver:targetUser._id,
+                      type:"follow",
+                    message:"started following you"})
+                   const populatedNotification=await Notification.findById(notification._id).populate("sender receiver")
+                    const receiverSocketId=getSocketId(targetUser._id)
+                          if(receiverSocketId){
+                              io.to(receiverSocketId).emit("newNotification",populatedNotification)} }
+      await currentUser.save()
       await targetUser.save()
       return res.status(200).json({
         following:true,
@@ -136,5 +148,39 @@ export const search=async(req,res)=>{
   } catch (error) {
     console.log(error);
     return res.status(500).json({message:`search error`})
+  }
+}
+export const getallNotifications=async(req,res)=>{
+  try {
+    const notifications=await Notification.find({
+      receiver:req.userId
+    }).populate("sender receiver post loop").sort({createdAt:-1})
+    return res.status(200).json(notifications)
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({message:"get notification error"})
+  }
+}
+export const markAsRead=async(req,res)=>{
+  try {
+    const {notificationId}=req.body
+    if (Array.isArray(notificationId)) {
+  // bulk mark-as-read
+  await Notification.updateMany(
+    { _id: { $in: notificationId }, receiver: req.userId },
+    { $set: { isRead: true } }
+  );
+} else {
+  // mark single notification as read
+  await Notification.findOneAndUpdate(
+    { _id: notificationId, receiver: req.userId },
+    { $set: { isRead: true } }
+  );
+}
+    return res.status(200).json({message:"marked as read"})
+  } catch (error) {
+    console.log(error);
+        return res.status(500).json({message:"read notification error"})
+
   }
 }
