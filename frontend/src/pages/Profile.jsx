@@ -50,45 +50,25 @@ const Profile = () => {
           <MdOutlineKeyboardBackspace className="text-white w-[25px] h-[25px] cursor-pointer" />
         </div>
         <div className="font-semibold text-[20px]">{profileData?.userName}</div>
-        <button
+   <button
   onClick={handleLogOut}
-  className="group relative cursor-pointer px-6 py-2.5 text-[13px] font-bold rounded-xl overflow-hidden active:scale-95 transition-transform duration-150"
+  className="flex items-center gap-2 px-5 py-2 rounded-xl cursor-pointer transition-all duration-150 active:scale-95"
   style={{
-    background: "linear-gradient(160deg, #ff6b6b 0%, #ef4444 30%, #dc2626 60%, #991b1b 100%)",
-    boxShadow: "0 0 0 1px rgba(255,100,80,0.3), 0 4px 20px rgba(239,68,68,0.4), 0 8px 40px rgba(180,20,20,0.3), inset 0 1px 0 rgba(255,255,255,0.2), inset 0 -1px 0 rgba(0,0,0,0.2)",
+    background: 'rgba(239,68,68,0.1)',
+    border: '1px solid rgba(239,68,68,0.2)',
+    color: 'rgba(239,68,68,0.8)',
   }}
-  onMouseEnter={e => e.currentTarget.style.boxShadow = "0 0 0 1px rgba(255,120,80,0.5), 0 0 20px rgba(255,80,80,0.4), 0 8px 40px rgba(239,68,68,0.5), 0 16px 60px rgba(180,20,20,0.35), inset 0 1px 0 rgba(255,255,255,0.25), inset 0 -1px 0 rgba(0,0,0,0.2)"}
-  onMouseLeave={e => e.currentTarget.style.boxShadow = "0 0 0 1px rgba(255,100,80,0.3), 0 4px 20px rgba(239,68,68,0.4), 0 8px 40px rgba(180,20,20,0.3), inset 0 1px 0 rgba(255,255,255,0.2), inset 0 -1px 0 rgba(0,0,0,0.2)"}
+  onMouseEnter={e => {
+    e.currentTarget.style.background = 'rgba(239,68,68,0.15)'
+    e.currentTarget.style.borderColor = 'rgba(239,68,68,0.35)'
+  }}
+  onMouseLeave={e => {
+    e.currentTarget.style.background = 'rgba(239,68,68,0.1)'
+    e.currentTarget.style.borderColor = 'rgba(239,68,68,0.2)'
+  }}
 >
-  {/* animated gradient border */}
-  <span className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
-    style={{ background: "linear-gradient(160deg, rgba(255,150,100,0.15) 0%, transparent 60%)" }}
-  />
-
-  {/* top glass gloss */}
-  <span className="absolute top-0 left-0 right-0 h-[50%] rounded-t-xl pointer-events-none"
-    style={{ background: "linear-gradient(180deg, rgba(255,255,255,0.18) 0%, transparent 100%)" }}
-  />
-
-  {/* shimmer sweep */}
-  <span className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-600 pointer-events-none skew-x-12"
-    style={{ background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.22), transparent)" }}
-  />
-
-  {/* bottom shadow depth */}
-  <span className="absolute bottom-0 left-0 right-0 h-[35%] rounded-b-xl pointer-events-none"
-    style={{ background: "linear-gradient(0deg, rgba(0,0,0,0.3) 0%, transparent 100%)" }}
-  />
-
-  {/* pulsing ring */}
-  <span className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 pointer-events-none animate-ping"
-    style={{ boxShadow: "0 0 0 4px rgba(239,68,68,0.15)", animationDuration: "1.5s" }}
-  />
-
-  <span className="relative z-10 flex items-center gap-2 text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.4)]">
-    <LogOut className="w-3.5 h-3.5 drop-shadow-sm group-hover:rotate-[-12deg] group-hover:-translate-x-0.5 transition-all duration-300" />
-    <span className="tracking-wide">Log Out</span>
-  </span>
+  <LogOut className="w-[15px] h-[15px]" />
+  <span className="text-[13px] font-semibold tracking-wide">Log Out</span>
 </button>
       </div>
       <div className="w-full h-[150px] flex items-start gap-[20px] lg:gap-[50px] pt-[20px] px-[10px] justify-center">
@@ -124,7 +104,6 @@ const Profile = () => {
        <div>
   <div className="flex items-center justify-center gap-[20px]">
 
-    {/* Avatar Stack */}
     <div
       className="relative h-[40px]"
       style={{
@@ -159,7 +138,6 @@ const Profile = () => {
         <div>
   <div className="flex items-center justify-center gap-[20px]">
     
-    {/* Avatar Stack */}
     <div
       className="relative h-[40px]"
       style={{
